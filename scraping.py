@@ -1,27 +1,51 @@
+
 from bs4 import BeautifulSoup, SoupStrainer
 import requests
 import csv
 from fake_useragent import UserAgent
 from saver import *
 import furl
+import time
+import random
 ua = UserAgent()
 chr = ua.opera
 d = []
+
 import pandas as pd
-
-
+print('Started WEB-Spider....')
 with open('other.txt', 'r') as f:
+
+
+
+
+
+
+
+    count =1
+
     for line in f:
+
+        count +=1
+        print('count is now -------->' + str(count))
+        r_count = random.randrange(51, 60)
+        r_sleep = random.randrange(21, 30)
+        print('Stoping in -------->'+ str(r_count))
+        print('Sleeping in -------->' + str(r_sleep))
+
+        if count >= r_count:
+            time.sleep(r_sleep)
+            count = 0
+
         url = str(line.strip('\n'))
-        print('Started WEB-Spider....')
+
         print('---------------------------' + url)
 
         req = requests.get(str(line))
         cookie = req.cookies
-        print(cookie)
-        print(line)
+        #print(cookie)
+        #print(line)
         get_html = requests.get(url, cookies=cookie, headers={"User-Agent": chr})
-        print(get_html)
+        #print(get_html)
         soup = BeautifulSoup(get_html.content, 'html5lib')
 
         f = furl.furl(url)
@@ -31,7 +55,7 @@ with open('other.txt', 'r') as f:
 
 
 
-        data_to_csv = open(d_file +'.csv','a')
+        data_to_csv = open('/home/mirinda/Documents/spider_now/content/' + d_file +'.csv','a')
 
 
 
@@ -161,33 +185,18 @@ with open('other.txt', 'r') as f:
                 continue
 
         type_url = soup.find_all('link', {'rel': 'alternate'}, {"hreflang": "en"}, href=True)
+
         for ul in type_url:
 
             type_ul = ul.get('href')
 
 
+
         d.append(())
-        with open(d_file + '.csv', 'a') as files:
-            writer = csv.writer(files)
-            writer.writerow([clear_id, clear_things, d_file, clear_seria_list, clear_thing_list, clear_things, clear_detail_com, clear_detail_type, clear_detail_size, clear_hd, clear_detail_surface_type, clear_detail_connector, clear_detail_fix, type_mat, clear_lf, clear_pric, type_ul])
-            #for clear in d:
+        try:
+            with open('/home/mirinda/Documents/spider_now/content/' + d_file + '.csv', 'a') as files:
+                writer = csv.writer(files)
+                writer.writerow([clear_id, clear_things, d_file, clear_seria_list, clear_thing_list, clear_things, clear_detail_com, clear_detail_type, clear_detail_size, clear_hd, clear_detail_surface_type, clear_detail_connector, clear_detail_fix, type_mat, clear_lf, clear_pric, type_ul])
 
-
-                # clear_seria_list, clear_thing_list, clear_things, clear_detail_com, clear_detail_type, clear_detail_size, clear_hd, clear_detail_surface_type, clear_detail_connector, clear_detail_fix, type_mat, clear_lf, clear_pric, type_ul
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        except:
+            continue

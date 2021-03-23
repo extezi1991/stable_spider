@@ -55,7 +55,7 @@ with open('other.txt', 'r') as f:
 
 
 
-        data_to_csv = open('/home/mirinda/Documents/spider_now/content/' + d_file +'.csv','a')
+        data_to_csv = open('/home/mirinda/Documents/pars/content/' + d_file +'.csv','a')
 
 
 
@@ -156,9 +156,19 @@ with open('other.txt', 'r') as f:
 
 
         type_matrix = soup.find_all('span', {'data-key': 'i25'} , class_='filter-spec')
-        for matrix in type_matrix:
+        if type_matrix:
+            for matrix in type_matrix:
+                type_mat = matrix.text
+                print(type_mat)
+        else:
+            type_mat = '    '
+            print('Fuuuuuu!')
 
-            type_mat = matrix.text
+
+
+
+
+
 
         type_grade = soup.find_all('span', {'data-key': ''}, class_='filter-spec')
         for grade in type_grade:
@@ -194,7 +204,7 @@ with open('other.txt', 'r') as f:
 
         d.append(())
         try:
-            with open('/home/mirinda/Documents/spider_now/content/' + d_file + '.csv', 'a') as files:
+            with open('/home/mirinda/Documents/pars/content/' + d_file + '.csv', 'a') as files:
                 writer = csv.writer(files)
                 writer.writerow([clear_id, clear_things, d_file, clear_seria_list, clear_thing_list, clear_things, clear_detail_com, clear_detail_type, clear_detail_size, clear_hd, clear_detail_surface_type, clear_detail_connector, clear_detail_fix, type_mat, clear_lf, clear_pric, type_ul])
 
